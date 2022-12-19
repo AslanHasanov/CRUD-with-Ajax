@@ -1,0 +1,181 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Text.Json;
+@using DemoApplication.Areas.Client.ViewComponents;
+@using DemoApplication.Areas.Client.ViewModels.Basket;
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pustok - Book Store HTML Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Use Minified Plugins Version For Fast Page Load -->
+    <link rel="stylesheet" asp-append-version="true" type="text/css" media="screen" href="~/client/assets/css/plugins.css" />
+    <link rel="stylesheet" asp-append-version="true" type="text/css" media="screen" href="~/client/assets/css/main.css" />
+    <link rel="shortcut icon" asp-append-version="true" type="image/x-icon" href="~/client/assets/image/favicon.ico">
+
+    @RenderSection("style", required: false)
+</head>
+
+<body>
+    <div class="site-wrapper" id="top">
+        <!--=================================
+                    Navbar
+        ===================================== -->
+
+        <div class="site-header d-none d-lg-block">
+            <div class="header-middle pt--10 pb--10">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 ">
+                            <a asp-controller="home" asp-action="index" class="site-brand">
+                                <img src="~/client/assets/image/logo.png" alt="">
+                            </a>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="header-phone ">
+                                <div class="icon">
+                                    <i class="fas fa-headphones-alt"></i>
+                                </div>
+                                <div class="text">
+                                    <p>Free Support 24/7</p>
+                                    <p class="font-weight-bold number">+01-202-555-0181</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="main-navigation flex-lg-right">
+                                <ul class="main-menu menu-right ">
+                                    <li class="menu-item">
+                                        <a href="contact.html">Blogs</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a asp-controller="home" asp-action="contact">Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom pb--10">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
+                            <nav class="category-nav">
+                                <div>
+                                    <a href="javascript:void(0)" class="category-trigger">
+                                        <i class="fa fa-bars"></i>Browse
+                                        categories
+                                    </a>
+                                    <ul class="category-menu">
+                                        <li class="cat-item"><a href="#">Perfomance Filters</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="header-search-block">
+                                <input type="text" placeholder="Search entire store here">
+                                <button>Search</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="main-navigation flex-lg-right">
+                                <div class="cart-widget">
+                                    <div class="login-block">
+                                        <a asp-controller="authentication" asp-action="login" class="font-weight-bold">Login</a>
+                                        <br>
+                                        <span>or</span>
+                                        <a asp-controller="authentication" asp-action="register">Register</a>
+                                    </div>
+                                    <div class="cart-block">
+                                        @await Component.InvokeAsync(nameof(ShopCart));
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @RenderBody();
+
+        <!-- Modal -->
+        <div class="modal fade modal-quick-view" id="quickModal" tabindex="-1" role="dialog"
+             aria-labelledby="quickModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close modal-close-btn ml-auto" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="product-details-modal">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <div class="widget-social-share">
+                            <span class="widget-label">Share:</span>
+                            <div class="modal-social-share">
+                                <a href="#" class="single-icon"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="single-icon"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="single-icon"><i class="fab fa-youtube"></i></a>
+                                <a href="#" class="single-icon"><i class="fab fa-google-plus-g"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@*    <div id="toasterAccept" class="bg-success d-inline">
+        <span class="text-light">Email Succesifully Aded</span>
+    </div>
+    <div id="toasterError" class="bg-danger d-inline">
+        <span class="text-light">Somethins Went Wrong</span>
+    </div>*@
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#btnSub").click(function () {
+                let aHref = this.nextElementSibling.href;
+                alert(aHref)
+
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: aHref,
+                        data: {
+                            Email: $("#txtEmail").val()
+                        }
+                    });
+            });
+        });
+
+
+    </script>
+
+
+    <script src="~/client/assets/js/plugins.js" asp-append-version="true"></script>
+    <script src="~/client/assets/js/ajax-mail.js" asp-append-version="true"></script>
+    <script src="~/client/assets/js/custom.js" asp-append-version="true"></script>
+    <script src="~/client/assets/js/basket-management.js" asp-append-version="true"></script>
+    <script src="~/client/assets/js/cookie-management.js" asp-append-version="true"></script>
+    <script src="~/client/assets/js/Color.js" asp-append-version="true"></script>
+
+
+    @RenderSection("script", required: false)
+</body>
+
+
+</html>

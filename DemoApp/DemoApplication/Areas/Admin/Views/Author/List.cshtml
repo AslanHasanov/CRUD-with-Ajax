@@ -1,0 +1,53 @@
+﻿@model List<ListItemViewModel>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Authors</h4>
+        </div><!--end card-header-->
+
+        <partial name="Partials/_AuthorModalPartial" />
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tblAuthor" class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>LastName</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableArea">
+                        @foreach (var author in Model)
+                        {
+                            <tr>
+                                <td>@author.Name</td>
+                                <td>@author.LastName</td>
+                                <td class="text-end">
+                                    <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg">u</button>
+                                    <a asp-route="admin-author-update" asp-route-id="@author.Id"></a>
+
+                                    <button data-id="row-@author.Id" type="button" onclick="deleteAuthor(this)">x</button>
+                                    <a asp-route="admin-author-delete" asp-route-id="@author.Id"></a>
+                                </td>
+                            </tr>
+                        }
+
+                        <tr id="row-template" class="d-none">
+                            <td class="name-td">As</td>
+                            <td class="last-td">Sa</td>
+                            <td class="links-td text-end">
+
+                                <button type="button"  data-toggle="modal" data-target=".bd-example-modal-lg">U</button>
+                                <a asp-route="admin-author-update" asp-route-id=""></a>
+
+                                <button data-id="" onclick="deleteAuthor(this)" type="button">x</button>
+                                <a asp-route="delete-author" asp-route-id=""></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><!--end /table-->
+            </div><!--end /tableresponsive-->
+        </div><!--end card-body-->
+    </div><!--end card-->
+</div>
